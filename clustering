@@ -1,0 +1,24 @@
+setwd("/Path/to/file")
+
+library(ggplot2)
+library(umap)
+
+#load in data
+player_stats <- as.data.frame(read.csv("player_stats.csv",sep = ";", header = T))
+
+#combine player name and team because players played for multiple teams
+player_stats$nameteam <- paste(player_stats$Player,player_stats$Squad)
+rownames(player_stats) <- player_stats$nameteam
+
+#find the dimensions of the data frame and subset numeric data only
+dim(player_stats)
+ps_num <- player_stats[7:124]
+
+#run PCA
+stats_pca <- prcomp(t(player_stats[7:124]))
+stats_pca
+plot(pca)
+
+#run and plot UMAP
+stats_umap <- umap(player_stats)
+plot(umap)
